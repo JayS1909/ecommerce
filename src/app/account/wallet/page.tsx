@@ -13,26 +13,26 @@ export default function WalletPage() {
 
         {/* Account Sidebar Navigation */}
         <div className="md:w-1/4">
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">My Account</h2>
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-6">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">My Account</h2>
             <nav className="space-y-4">
-              <Link href="/account" className="block text-gray-600 hover:text-black hover:bg-gray-50 px-4 py-2 rounded-md transition">Dashboard</Link>
-              <Link href="/account/wallet" className="block text-black font-semibold bg-gray-100 px-4 py-2 rounded-md">Wallet & History</Link>
-              <Link href="/account/returns" className="block text-gray-600 hover:text-black hover:bg-gray-50 px-4 py-2 rounded-md transition">Returns & Exchanges</Link>
+              <Link href="/account" className="block text-gray-600 dark:text-gray-400 hover:text-black dark:text-white hover:bg-gray-50 dark:bg-gray-800 px-4 py-2 rounded-md transition">Dashboard</Link>
+              <Link href="/account/wallet" className="block text-black dark:text-white font-semibold bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-md">Wallet & History</Link>
+              <Link href="/account/returns" className="block text-gray-600 dark:text-gray-400 hover:text-black dark:text-white hover:bg-gray-50 dark:bg-gray-800 px-4 py-2 rounded-md transition">Returns & Exchanges</Link>
             </nav>
           </div>
         </div>
 
         {/* Wallet Content */}
         <div className="md:w-3/4">
-          <div className="bg-white rounded-lg shadow p-8">
-            <h1 className="text-2xl font-bold text-gray-900 mb-6">My Wallet</h1>
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow p-8">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">My Wallet</h1>
 
             <div className="bg-gradient-to-r from-gray-900 to-gray-700 text-white rounded-xl p-8 mb-8 shadow-lg">
               <p className="text-gray-300 text-sm mb-1">Available Balance</p>
               <h2 className="text-4xl font-extrabold">$150.00</h2>
               <div className="mt-6">
-                <button className="bg-white text-gray-900 px-6 py-2 rounded-md font-semibold text-sm hover:bg-gray-100 transition">
+                <button className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white px-6 py-2 rounded-md font-semibold text-sm hover:bg-gray-100 dark:bg-gray-800 transition">
                   Top up Balance
                 </button>
               </div>
@@ -41,21 +41,21 @@ export default function WalletPage() {
             <h3 className="text-xl font-semibold mb-4 border-b pb-2">Transaction History</h3>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction ID</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Transaction ID</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200">
                   {transactions.map((txn) => (
                     <tr key={txn.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{txn.date}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{txn.description}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{txn.id}</td>
-                      <td className={`px-6 py-4 whitespace-nowrap text-sm text-right font-medium ${txn.type === 'credit' ? 'text-green-600' : 'text-gray-900'}`}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{txn.date}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{txn.description}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{txn.id}</td>
+                      <td className={`px-6 py-4 whitespace-nowrap text-sm text-right font-medium ${txn.type === 'credit' ? 'text-green-600' : 'text-gray-900 dark:text-white'}`}>
                         {txn.type === 'credit' ? '+' : ''}{txn.amount.toFixed(2)}
                       </td>
                     </tr>
