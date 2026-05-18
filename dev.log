@@ -1,0 +1,19 @@
+
+> next-app@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+✓ Ready in 535ms
+
+ HEAD / 200 in 3.6s (next.js: 3.2s, application-code: 424ms)
+ GET / 200 in 184ms (next.js: 12ms, application-code: 172ms)
+ GET /category/Men 200 in 1774ms (next.js: 1633ms, generate-params: 1043ms, application-code: 141ms)
+ GET /product/1 200 in 1663ms (next.js: 1608ms, generate-params: 837ms, application-code: 56ms)
+ GET /cart 200 in 612ms (next.js: 560ms, application-code: 52ms)
+ GET /checkout 200 in 573ms (next.js: 529ms, application-code: 44ms)
+ GET /order-tracking 200 in 655ms (next.js: 503ms, application-code: 151ms)
+ GET /order-tracking 200 in 22ms (next.js: 5ms, application-code: 17ms)
+ GET /order-tracking 200 in 63ms (next.js: 4ms, application-code: 58ms)
+ GET /account 200 in 614ms (next.js: 513ms, application-code: 101ms)
