@@ -20,8 +20,10 @@ export default function Navbar() {
             <Link href="/order-tracking" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Track Order</Link>
             <Link href="/account" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Account</Link>
             <Link href="/cart" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Cart</Link>
+            <Link href="/design" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Custom Design</Link>
             <Link href="/admin" className="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Admin</Link>
             <Link href="/subscription" className="text-indigo-600 dark:text-indigo-400 font-bold px-3 py-2 rounded-md text-sm transition-colors">VIP</Link>
+            <Link href="/register" className="bg-black text-white dark:bg-white dark:text-black px-4 py-2 rounded-md text-sm font-medium transition-colors ml-2">Register</Link>
           </div>
         </div>
       </div>

@@ -1,14 +1,58 @@
-import Link from 'next/link';
+'use client';
+
+import { useState } from 'react';
 import products from '@/data/products.json';
 
 export default function AdminPage() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === 'admin123') {
+      setIsAuthenticated(true);
+      setError('');
+    } else {
+      setError('Invalid password. Try admin123');
+    }
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="max-w-md mx-auto px-4 py-24">
+        <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg p-8 border dark:border-gray-800 text-center">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Admin Access Required</h1>
+          <form onSubmit={handleLogin}>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter Admin Password"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md mb-4 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+            />
+            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+            <button type="submit" className="w-full bg-black dark:bg-white text-white dark:text-black font-bold py-2 px-4 rounded transition">
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
-        <button className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-md font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-200 transition">
-          Add New Product
-        </button>
+        <div className="flex space-x-4">
+          <button onClick={() => setIsAuthenticated(false)} className="border border-gray-300 dark:border-gray-700 px-4 py-2 rounded-md font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+            Logout
+          </button>
+          <button className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-md font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-200 transition">
+            Add New Product
+          </button>
+        </div>
       </div>
 
       <div className="bg-white dark:bg-gray-900 shadow rounded-lg overflow-hidden border dark:border-gray-800">
