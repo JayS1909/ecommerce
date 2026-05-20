@@ -16,7 +16,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
         <h1 className="text-3xl font-bold mb-4">Product not found</h1>
-        <p className="text-gray-600 dark:text-gray-300 mb-8">We couldn't find the product you're looking for.</p>
+        <p className="text-gray-600 dark:text-gray-300 mb-8">We couldn&apos;t find the product you&apos;re looking for.</p>
         <Link href="/" className="text-blue-600 hover:underline">Return Home</Link>
       </div>
     );

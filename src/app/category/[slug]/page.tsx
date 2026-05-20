@@ -18,7 +18,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
         <h1 className="text-3xl font-bold mb-4">Category not found</h1>
-        <p className="text-gray-600 mb-8">We couldn't find any products in this category.</p>
+        <p className="text-gray-600 mb-8">We couldn&apos;t find any products in this category.</p>
         <Link href="/" className="text-blue-600 hover:underline">Return Home</Link>
       </div>
     );

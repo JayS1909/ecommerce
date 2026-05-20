@@ -18,7 +18,7 @@ export default function SubscriptionPage() {
       name: 'ClothingCo Premium',
       description: 'Monthly VIP Membership',
       image: 'https://via.placeholder.com/150',
-      handler: function (response: any) {
+      handler: function (response: Record<string, string>) {
         alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}\nSubscription ID: ${response.razorpay_subscription_id}`);
       },
       prefill: {
@@ -31,7 +31,7 @@ export default function SubscriptionPage() {
       }
     };
 
-    // @ts-ignore
+    // @ts-expect-error Razorpay SDK is loaded via external script so window.Razorpay is not globally typed
     const rzp = new window.Razorpay(options);
     rzp.open();
     setLoading(false);
