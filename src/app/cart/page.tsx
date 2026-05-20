@@ -1,12 +1,14 @@
+'use client';
+
 import Link from "next/link";
-import products from "@/data/products.json";
+import { useCart } from '@/context/CartContext';
 
 export default function CartPage() {
-  // Using some mock items for the cart
-  const cartItems = products.slice(0, 2);
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0);
+  const { cart, removeFromCart } = useCart();
+
+  const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const tax = subtotal * 0.08;
-  const total = subtotal + tax;
+  const total = subtotal + tax + (cart.length > 0 ? 5 : 0); // 5 shipping if cart not empty
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -14,30 +16,49 @@ export default function CartPage() {
 
       <div className="flex flex-col lg:flex-row gap-12">
         <div className="lg:w-2/3">
-          <ul className="border-t border-b border-gray-200 dark:border-gray-700 divide-y divide-gray-200">
-            {cartItems.map((item) => (
-              <li key={item.id} className="flex py-6">
-                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
-                  <img src={item.image} alt={item.name} className="h-full w-full object-cover object-center" />
-                </div>
-                <div className="ml-4 flex flex-1 flex-col">
-                  <div>
-                    <div className="flex justify-between text-base font-medium text-gray-900 dark:text-white">
-                      <h3><Link href={`/product/${item.id}`}>{item.name}</Link></h3>
-                      <p className="ml-4">${item.price.toFixed(2)}</p>
-                    </div>
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{item.category} • Size: M</p>
+          {cart.length === 0 ? (
+            <div className="py-12 text-center border-t border-b border-gray-200 dark:border-gray-700">
+              <p className="text-gray-500 dark:text-gray-400 mb-4">Your cart is currently empty.</p>
+              <Link href="/" className="text-blue-600 hover:underline">Continue Shopping</Link>
+            </div>
+          ) : (
+            <ul className="border-t border-b border-gray-200 dark:border-gray-700 divide-y divide-gray-200 dark:divide-gray-700">
+              {cart.map((item) => (
+                <li key={`${item.id}-${item.size}`} className="flex py-6">
+                  <div className={`h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700 ${item.isCustom ? 'p-2' : ''}`} style={item.isCustom ? { backgroundColor: item.color } : {}}>
+                    <img src={item.image} alt={item.name} className="h-full w-full object-cover object-center" />
                   </div>
-                  <div className="flex flex-1 items-end justify-between text-sm">
-                    <p className="text-gray-500 dark:text-gray-400">Qty 1</p>
-                    <div className="flex">
-                      <button type="button" className="font-medium text-red-600 hover:text-red-500">Remove</button>
+                  <div className="ml-4 flex flex-1 flex-col">
+                    <div>
+                      <div className="flex justify-between text-base font-medium text-gray-900 dark:text-white">
+                        <h3>
+                          {item.isCustom ? (
+                            <span>{item.name}</span>
+                          ) : (
+                            <Link href={`/product/${item.id}`}>{item.name}</Link>
+                          )}
+                        </h3>
+                        <p className="ml-4">${(item.price * item.quantity).toFixed(2)}</p>
+                      </div>
+                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{item.category} • Size: {item.size}</p>
+                    </div>
+                    <div className="flex flex-1 items-end justify-between text-sm">
+                      <p className="text-gray-500 dark:text-gray-400">Qty {item.quantity}</p>
+                      <div className="flex">
+                        <button
+                          type="button"
+                          onClick={() => removeFromCart(item.id)}
+                          className="font-medium text-red-600 hover:text-red-500"
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div className="lg:w-1/3">
@@ -50,7 +71,7 @@ export default function CartPage() {
               </div>
               <div className="flex justify-between text-sm text-gray-600 dark:text-gray-300">
                 <p>Shipping estimate</p>
-                <p>$5.00</p>
+                <p>${cart.length > 0 ? '5.00' : '0.00'}</p>
               </div>
               <div className="flex justify-between text-sm text-gray-600 dark:text-gray-300">
                 <p>Tax estimate</p>
@@ -58,18 +79,18 @@ export default function CartPage() {
               </div>
               <div className="border-t border-gray-200 dark:border-gray-700 pt-4 flex justify-between text-base font-medium text-gray-900 dark:text-white">
                 <p>Order total</p>
-                <p>${(total + 5).toFixed(2)}</p>
+                <p>${total.toFixed(2)}</p>
               </div>
             </div>
             <div className="mt-6">
-              <Link href="/checkout" className="w-full flex items-center justify-center rounded-md border border-transparent bg-black dark:bg-white dark:text-black dark:text-white px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-800">
+              <Link href="/checkout" className={`w-full flex items-center justify-center rounded-md border border-transparent bg-black dark:bg-white dark:text-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-800 dark:hover:bg-gray-200 ${cart.length === 0 ? 'opacity-50 pointer-events-none' : ''}`}>
                 Checkout
               </Link>
             </div>
             <div className="mt-6 flex justify-center text-center text-sm text-gray-500 dark:text-gray-400">
               <p>
                 or{' '}
-                <Link href="/" className="font-medium text-black dark:text-white hover:text-gray-800">
+                <Link href="/" className="font-medium text-black dark:text-white hover:text-gray-800 dark:hover:text-gray-200">
                   Continue Shopping<span aria-hidden="true"> &rarr;</span>
                 </Link>
               </p>

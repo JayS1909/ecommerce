@@ -7,6 +7,33 @@ export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [adminProducts, setAdminProducts] = useState(products.slice(0, 10));
+
+  const handleDelete = (id: string) => {
+    setAdminProducts(prev => prev.filter(p => p.id !== id));
+  };
+
+  const handleEdit = (id: string) => {
+    const currentName = adminProducts.find(p => p.id === id)?.name;
+    const newName = window.prompt("Edit Product Name:", currentName);
+    if (newName) {
+      setAdminProducts(prev => prev.map(p => p.id === id ? { ...p, name: newName } : p));
+    }
+  };
+
+  const handleAdd = () => {
+    const newName = window.prompt("Enter new product name:");
+    if (!newName) return;
+    const newProduct = {
+      id: Math.random().toString(),
+      name: newName,
+      category: "Men",
+      price: 29.99,
+      image: "https://via.placeholder.com/300x400?text=New+Product",
+      description: "A newly added product."
+    };
+    setAdminProducts(prev => [newProduct, ...prev]);
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +76,7 @@ export default function AdminPage() {
           <button onClick={() => setIsAuthenticated(false)} className="border border-gray-300 dark:border-gray-700 px-4 py-2 rounded-md font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition">
             Logout
           </button>
-          <button className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-md font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-200 transition">
+          <button onClick={handleAdd} className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-md font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-200 transition">
             Add New Product
           </button>
         </div>
@@ -71,7 +98,7 @@ export default function AdminPage() {
               </tr>
             </thead>
             <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-              {products.slice(0, 10).map((product) => (
+              {adminProducts.map((product) => (
                 <tr key={product.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -95,12 +122,12 @@ export default function AdminPage() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
                        <span className="text-sm text-gray-900 dark:text-white font-medium">In Stock</span>
-                       <button className="text-xs border border-gray-300 dark:border-gray-600 rounded px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition">Update</button>
+                       <button onClick={() => window.alert('Stock level updated.')} className="text-xs border border-gray-300 dark:border-gray-600 rounded px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition">Update</button>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-4">Edit</button>
-                    <button className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">Delete</button>
+                    <button onClick={() => handleEdit(product.id)} className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-4">Edit</button>
+                    <button onClick={() => handleDelete(product.id)} className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">Delete</button>
                   </td>
                 </tr>
               ))}

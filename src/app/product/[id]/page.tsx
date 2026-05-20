@@ -1,5 +1,6 @@
 import Link from "next/link";
 import products from "@/data/products.json";
+import ProductClient from "./ProductClient";
 
 export async function generateStaticParams() {
   return products.map((product) => ({
@@ -50,22 +51,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{product.description}</p>
           </div>
 
-          <div className="mb-8">
-            <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-2">Size</h3>
-            <div className="flex space-x-3">
-              {['S', 'M', 'L', 'XL'].map((size) => (
-                <button key={size} className="w-12 h-12 rounded border border-gray-300 flex items-center justify-center hover:border-black hover:bg-black dark:bg-white dark:text-black hover:text-white transition">
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex space-x-4">
-            <Link href="/cart" className="flex-1 bg-black dark:bg-white dark:text-black text-white text-center px-6 py-4 rounded-md font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition">
-              Add to Cart
-            </Link>
-          </div>
+          <ProductClient product={product} />
 
           {/* Delivery Info */}
           <div className="mt-8 border-t border-gray-200 pt-6">

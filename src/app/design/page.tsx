@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { useCart } from '@/context/CartContext';
 
 export default function CustomDesignPage() {
+  const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState('M');
   const [selectedColor, setSelectedColor] = useState('#ffffff');
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -18,6 +20,7 @@ export default function CustomDesignPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const lastPos = useRef({ x: 0, y: 0 });
+  const [penColor, setPenColor] = useState('#000000');
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -88,7 +91,7 @@ export default function CustomDesignPage() {
     ctx.beginPath();
     ctx.moveTo(lastPos.current.x, lastPos.current.y);
     ctx.lineTo(newPos.x, newPos.y);
-    ctx.strokeStyle = '#000000'; // Default pen color
+    ctx.strokeStyle = penColor;
     ctx.lineWidth = 3;
     ctx.lineCap = 'round';
     ctx.stroke();
@@ -193,6 +196,26 @@ export default function CustomDesignPage() {
             <div className="mb-8">
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Draw Your Design</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Use the trackpad or mouse to draw directly on the t-shirt preview.</p>
+
+              <div className="flex space-x-3 mb-4">
+                {[
+                  { name: 'Black', hex: '#000000' },
+                  { name: 'White', hex: '#ffffff' },
+                  { name: 'Red', hex: '#ef4444' },
+                  { name: 'Blue', hex: '#3b82f6' },
+                  { name: 'Green', hex: '#22c55e' },
+                  { name: 'Yellow', hex: '#eab308' },
+                ].map((color) => (
+                  <button
+                    key={color.hex}
+                    onClick={() => setPenColor(color.hex)}
+                    className={`w-8 h-8 rounded-full border-2 focus:outline-none transition-transform hover:scale-110 ${penColor === color.hex ? 'border-blue-500 shadow-md scale-110' : 'border-gray-300 dark:border-gray-600'}`}
+                    style={{ backgroundColor: color.hex }}
+                    title={`Pen Color: ${color.name}`}
+                  />
+                ))}
+              </div>
+
               <button
                 onClick={clearCanvas}
                 className="border border-red-500 text-red-500 px-4 py-2 rounded-md font-semibold text-sm hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
@@ -271,19 +294,25 @@ export default function CustomDesignPage() {
               <p className="text-3xl font-extrabold text-gray-900 dark:text-white">$29.99</p>
             </div>
             <button
-              className={`px-8 py-4 rounded-md font-bold text-lg transition-colors ${
-                uploadedImage
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg'
-                  : 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-              }`}
-              disabled={!uploadedImage}
+              onClick={() => {
+                addToCart({
+                  id: `custom-${Math.random()}`,
+                  name: 'Custom Designed T-Shirt',
+                  price: 29.99,
+                  image: uploadedImage || 'https://via.placeholder.com/150?text=Custom+Design',
+                  category: 'Custom',
+                  size: selectedSize,
+                  quantity: 1,
+                  isCustom: true,
+                  color: selectedColor
+                });
+                alert('Added to cart!');
+              }}
+              className="px-8 py-4 rounded-md font-bold text-lg transition-colors bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
             >
               Add to Cart
             </button>
           </div>
-          {!uploadedImage && (
-            <p className="text-sm text-red-500 mt-2 text-right">Please upload a design first.</p>
-          )}
 
         </div>
       </div>
