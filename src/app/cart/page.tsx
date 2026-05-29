@@ -69,6 +69,13 @@ export default function CartPage() {
                 <p>Subtotal</p>
                 <p>${subtotal.toFixed(2)}</p>
               </div>
+
+              {/* Coupon Box */}
+              <div className="flex space-x-2 pt-2 pb-2">
+                <input type="text" placeholder="Coupon Code" className="flex-1 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:outline-none" />
+                <button className="bg-gray-200 dark:bg-gray-700 px-4 py-2 text-sm font-bold uppercase">Apply</button>
+              </div>
+
               <div className="flex justify-between text-sm text-gray-600 dark:text-gray-300">
                 <p>Shipping estimate</p>
                 <p>${cart.length > 0 ? '5.00' : '0.00'}</p>
@@ -82,11 +89,17 @@ export default function CartPage() {
                 <p>${total.toFixed(2)}</p>
               </div>
             </div>
+
             <div className="mt-6">
-              <Link href="/checkout" className={`w-full flex items-center justify-center rounded-md border border-transparent bg-black dark:bg-white dark:text-black px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-800 dark:hover:bg-gray-200 ${cart.length === 0 ? 'opacity-50 pointer-events-none' : ''}`}>
+              <Link href="/checkout" className={`w-full flex items-center justify-center rounded-none border border-transparent bg-black dark:bg-white dark:text-black px-6 py-4 text-base font-bold uppercase tracking-widest text-white shadow-sm hover:bg-gray-800 dark:hover:bg-gray-200 ${cart.length === 0 ? 'opacity-50 pointer-events-none' : ''}`}>
                 Checkout
               </Link>
             </div>
+
+            <div className="mt-4 text-center">
+              <p className="text-xs text-green-600 dark:text-green-400 font-bold uppercase flex items-center justify-center"><span className="mr-1">💵</span> Cash on Delivery Available</p>
+            </div>
+
             <div className="mt-6 flex justify-center text-center text-sm text-gray-500 dark:text-gray-400">
               <p>
                 or{' '}

@@ -30,7 +30,15 @@ export default function AdminPage() {
       category: "Men",
       price: 29.99,
       image: "https://via.placeholder.com/300x400?text=New+Product",
-      description: "A newly added product."
+      hoverImage: "https://via.placeholder.com/300x400?text=New+Product+Hover",
+      description: "A newly added product.",
+      fabric: "100% Cotton",
+      fit: "Regular",
+      washCare: "Machine Wash Cold",
+      isNew: true,
+      isBestSeller: false,
+      collection: "Summer",
+      discount: 0
     };
     setAdminProducts(prev => [newProduct, ...prev]);
   };
@@ -71,20 +79,35 @@ export default function AdminPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
+        <h1 className="text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">Admin Dashboard</h1>
         <div className="flex space-x-4">
-          <button onClick={() => setIsAuthenticated(false)} className="border border-gray-300 dark:border-gray-700 px-4 py-2 rounded-md font-medium text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+          <button onClick={() => setIsAuthenticated(false)} className="border border-gray-300 dark:border-gray-700 px-4 py-2 font-bold uppercase text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition">
             Logout
-          </button>
-          <button onClick={handleAdd} className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-md font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-200 transition">
-            Add New Product
           </button>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-900 shadow rounded-lg overflow-hidden border dark:border-gray-800">
-        <div className="px-4 py-5 sm:px-6 flex justify-between items-center bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-700">
-          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">Product Inventory</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div className="bg-white dark:bg-gray-900 p-6 border dark:border-gray-800 shadow-sm text-center">
+          <p className="text-sm font-bold uppercase text-gray-500 mb-1">Total Users</p>
+          <p className="text-4xl font-black">1,248</p>
+        </div>
+        <div className="bg-white dark:bg-gray-900 p-6 border dark:border-gray-800 shadow-sm text-center">
+          <p className="text-sm font-bold uppercase text-gray-500 mb-1">Active Products</p>
+          <p className="text-4xl font-black">{adminProducts.length}</p>
+        </div>
+        <div className="bg-white dark:bg-gray-900 p-6 border dark:border-gray-800 shadow-sm text-center">
+          <p className="text-sm font-bold uppercase text-gray-500 mb-1">Pending Returns</p>
+          <p className="text-4xl font-black text-red-500">12</p>
+        </div>
+      </div>
+
+      <div className="bg-white dark:bg-gray-900 shadow-sm border dark:border-gray-800 mb-12">
+        <div className="px-6 py-5 flex justify-between items-center bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-700">
+          <h3 className="text-lg font-bold uppercase tracking-tight text-gray-900 dark:text-white">Product Inventory</h3>
+          <button onClick={handleAdd} className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 font-bold uppercase text-xs hover:bg-gray-800 transition">
+            + Add Product
+          </button>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -135,7 +158,43 @@ export default function AdminPage() {
           </table>
         </div>
         <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-center sm:px-6">
-           <p className="text-sm text-gray-500 dark:text-gray-400">Showing top 10 items. Pagination mock.</p>
+           <p className="text-sm text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Showing {adminProducts.length} items. Pagination mock.</p>
+        </div>
+      </div>
+
+      <div className="bg-white dark:bg-gray-900 shadow-sm border dark:border-gray-800">
+        <div className="px-6 py-5 flex justify-between items-center bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-700">
+          <h3 className="text-lg font-bold uppercase tracking-tight text-gray-900 dark:text-white">User Database</h3>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-800">
+              <tr>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Name</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Email</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Role</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+              {[
+                { name: "John Doe", email: "john@example.com", role: "Customer", status: "Active" },
+                { name: "Jane Smith", email: "jane@example.com", role: "Customer", status: "Active" },
+                { name: "Admin Root", email: "admin@urbanfit.com", role: "Admin", status: "Active" },
+              ].map((user, idx) => (
+                <tr key={idx}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 dark:text-white">{user.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{user.email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2 inline-flex text-xs leading-5 font-bold uppercase tracking-wider ${user.role === 'Admin' ? 'text-red-600' : 'text-gray-500'}`}>
+                      {user.role}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-bold uppercase tracking-wider">{user.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
