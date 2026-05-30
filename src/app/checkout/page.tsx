@@ -37,7 +37,7 @@ export default function CheckoutPage() {
 
   const selectedPaymentMethod = watch('paymentMethod');
 
-  const onSubmit = (data: CheckoutFormValues) => {
+  const onSubmit = () => {
     // In a real app, this would process the payment and create the order on the backend
     // Removed console.log
     window.confirm('Order Placed Successfully! Your items are on the way.');

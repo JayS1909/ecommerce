@@ -1,13 +1,10 @@
 'use client';
-import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 import { useState } from 'react';
 import products from '@/data/products.json';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 export default function AdminPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [adminProducts, setAdminProducts] = useState(products.slice(0, 10));
 
   const handleDelete = (id: string) => {
@@ -15,11 +12,7 @@ export default function AdminPage() {
   };
 
   const handleEdit = (id: string) => {
-    const currentName = adminProducts.find(p => p.id === id)?.name;
-    const newName = window.prompt("Edit Product Name:", currentName);
-    if (newName) {
-      setAdminProducts(prev => prev.map(p => p.id === id ? { ...p, name: newName } : p));
-    }
+    window.prompt("Edit product name:", adminProducts.find(p => p.id === id)?.name);
   };
 
   const handleAdd = () => {
@@ -44,52 +37,10 @@ export default function AdminPage() {
     setAdminProducts(prev => [newProduct, ...prev]);
   };
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
-      });
-      if (res.ok) {
-        setIsAuthenticated(true);
-        setError('');
-      } else {
-        setError('Invalid password. Check environment variables');
-      }
-    } catch (err) {
-      setError('Failed to login');
-    }
-  };
-
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
-    setIsAuthenticated(false);
+    window.location.href = '/login';
   };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="max-w-md mx-auto px-4 py-24">
-        <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg p-8 border dark:border-gray-800 text-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Admin Access Required</h1>
-          <form onSubmit={handleLogin}>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter Admin Password"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md mb-4 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
-            />
-            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-            <button type="submit" className="w-full bg-black dark:bg-white text-white dark:text-black font-bold py-2 px-4 rounded transition">
-              Login
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -160,7 +111,7 @@ export default function AdminPage() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
                        <span className="text-sm text-gray-900 dark:text-white font-medium">In Stock</span>
-                       <button onClick={() => window.window.confirm('Stock level updated.')} className="text-xs border border-gray-300 dark:border-gray-600 rounded px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition">Update</button>
+                       <button onClick={() => window.confirm('Stock level updated.')} className="text-xs border border-gray-300 dark:border-gray-600 rounded px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition">Update</button>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
