@@ -31,7 +31,7 @@ export default function AccountDashboard() {
                 <Link href="/order-tracking" className="text-blue-600 hover:text-blue-800 font-bold uppercase text-sm">Track Order &rarr;</Link>
               </div>
               <div className="bg-gray-50 dark:bg-gray-800 p-6 border border-gray-200 dark:border-gray-700">
-                <h3 className="text-lg font-bold uppercase mb-2">UrbanFit Wallet</h3>
+                <h3 className="text-lg font-bold uppercase mb-2">EXTRAALAYER Wallet</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">Current Balance: <span className="font-bold text-black dark:text-white">$25.00</span></p>
                 <Link href="/account/wallet" className="text-blue-600 hover:text-blue-800 font-bold uppercase text-sm">View Transactions &rarr;</Link>
               </div>

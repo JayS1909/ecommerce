@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-2">
-            <span className="font-extrabold text-3xl tracking-tighter text-white mb-4 block">URBAN<span className="text-blue-500">FIT</span></span>
+            <span className="font-extrabold text-3xl tracking-tighter text-white mb-4 block">EXTRAALAYER</span>
             <p className="text-gray-400 mb-6 max-w-sm">Premium streetwear brand offering high-quality oversized tees, hoodies, and accessories. Experience comfort like never before.</p>
             <div className="flex space-x-4">
               <span className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center cursor-pointer hover:bg-blue-600 transition">IG</span>
@@ -48,7 +48,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-500">&copy; {new Date().getFullYear()} UrbanFit. All rights reserved.</p>
+          <p className="text-sm text-gray-500">&copy; {new Date().getFullYear()} EXTRAALAYER. All rights reserved.</p>
           <div className="flex space-x-4 mt-4 md:mt-0 text-sm text-gray-500">
              <Link href="/admin">Admin Panel</Link>
           </div>

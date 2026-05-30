@@ -14,12 +14,12 @@ export default function SubscriptionPage() {
 
     const options = {
       key: 'rzp_test_YOUR_KEY_HERE', // Mock Razorpay key
-      subscription_id: 'sub_MOCK1234567890', // Mock Subscription ID from your backend
-      name: 'ClothingCo Premium',
+      subscription_id: 'sapos;sub_MOCK1234567890', // Mock Subscription ID from your backend
+      name: 'EXTRAALAYER Premium',
       description: 'Monthly VIP Membership',
-      image: 'https://via.placeholder.com/150',
+      image: '/images/logo/logo.png',
       handler: function (response: Record<string, string>) {
-        alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}\nSubscription ID: ${response.razorpay_subscription_id}`);
+        window.confirm(`Payment successful! Payment ID: ${response.razorpay_payment_id}\nSubscription ID: ${response.razorpay_subscription_id}`);
       },
       prefill: {
         name: 'John Doe',
@@ -42,7 +42,7 @@ export default function SubscriptionPage() {
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
 
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">ClothingCo VIP Membership</h1>
+        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">EXTRAALAYER VIP Membership</h1>
         <p className="text-xl text-gray-600 dark:text-gray-300">Join our premium club and unlock exclusive benefits.</p>
       </div>
 

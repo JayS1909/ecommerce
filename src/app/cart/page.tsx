@@ -1,10 +1,11 @@
 'use client';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 import Link from "next/link";
-import { useCart } from '@/context/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 
 export default function CartPage() {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart } = useCartStore();
 
   const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const tax = subtotal * 0.08;
@@ -26,7 +27,7 @@ export default function CartPage() {
               {cart.map((item) => (
                 <li key={`${item.id}-${item.size}`} className="flex py-6">
                   <div className={`h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-700 ${item.isCustom ? 'p-2' : ''}`} style={item.isCustom ? { backgroundColor: item.color } : {}}>
-                    <img src={item.image} alt={item.name} className="h-full w-full object-cover object-center" />
+                    <ImageWithFallback src={item.image} alt={item.name} className="h-full w-full object-cover object-center" />
                   </div>
                   <div className="ml-4 flex flex-1 flex-col">
                     <div>
@@ -47,7 +48,7 @@ export default function CartPage() {
                       <div className="flex">
                         <button
                           type="button"
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => removeFromCart(item.id, item.size)}
                           className="font-medium text-red-600 hover:text-red-500"
                         >
                           Remove

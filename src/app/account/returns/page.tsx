@@ -1,11 +1,8 @@
 'use client';
 import Link from "next/link";
 
-export default function ReturnsPage() {
-  const eligibleOrders = [
-    { id: '10293', date: '2023-10-15', status: 'Delivered', items: 2, total: 45.50 },
-  ];
 
+export default function ReturnsPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex flex-col md:flex-row gap-8">
@@ -41,7 +38,7 @@ export default function ReturnsPage() {
                 <div>
                   <label className="block text-sm font-bold uppercase mb-2">Reason for Return</label>
                   <select className="w-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-3 text-sm focus:outline-none">
-                    <option>Size doesn't fit</option>
+                    <option>Size doesn&apos;t fit</option>
                     <option>Received wrong item</option>
                     <option>Quality issue / Damaged</option>
                     <option>Changed my mind</option>
@@ -55,7 +52,7 @@ export default function ReturnsPage() {
                   </div>
                 </div>
                 <div className="pt-4">
-                  <button type="button" onClick={() => alert('Return Request Submitted!')} className="bg-black dark:bg-white text-white dark:text-black font-black uppercase px-8 py-4 w-full md:w-auto">Submit Request</button>
+                  <button type="button" onClick={() => window.confirm('Return Request Submitted!')} className="bg-black dark:bg-white text-white dark:text-black font-black uppercase px-8 py-4 w-full md:w-auto">Submit Request</button>
                 </div>
               </form>
             </div>

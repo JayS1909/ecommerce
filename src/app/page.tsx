@@ -1,6 +1,8 @@
+type Product = { id: string, name: string, price: number, image: string, hoverImage: string, category: string, discount: number };
+
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
 import Link from "next/link";
 import products from "@/data/products.json";
-import ProductClient from "./product/[id]/ProductClient";
 
 export default function Home() {
   const newArrivals = products.filter(p => p.isNew).slice(0, 4);
@@ -12,8 +14,8 @@ export default function Home() {
       {/* Hero Banner */}
       <section className="w-full relative h-[70vh] bg-black flex items-center justify-center transition-colors">
         <div className="absolute inset-0">
-           <img
-              src="https://via.placeholder.com/1920x1080/1a1a1a/ffffff?text=URBAN+STREETWEAR+COLLECTION"
+           <ImageWithFallback
+              src="/images/logo/logo.png"
               alt="Hero Banner"
               className="w-full h-full object-cover opacity-60"
             />
@@ -22,7 +24,7 @@ export default function Home() {
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter uppercase leading-tight">Define Your <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">Own Rules</span></h1>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto font-medium">Premium oversized tees and hoodies designed for the streets. Comfort meets unapologetic style.</p>
           <div className="flex justify-center space-x-4">
-            <Link href="/category/Oversized%20Tees" className="bg-white text-black px-8 py-4 rounded-none font-bold hover:bg-gray-200 transition uppercase tracking-wider text-sm">
+            <Link href="/category/OversizedTees" className="bg-white text-black px-8 py-4 rounded-none font-bold hover:bg-gray-200 transition uppercase tracking-wider text-sm">
               Shop Oversized
             </Link>
             <Link href="/category/Hoodies" className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-none font-bold hover:bg-white hover:text-black transition uppercase tracking-wider text-sm">
@@ -51,8 +53,8 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {["Oversized Tees", "Regular Tees", "Hoodies", "Bottoms", "Accessories"].map((cat) => (
             <Link key={cat} href={`/category/${encodeURIComponent(cat)}`} className="group relative block aspect-[4/5] bg-gray-100 dark:bg-gray-800 overflow-hidden">
-              <img
-                src={`https://via.placeholder.com/400x500/e5e7eb/000000?text=${cat.split(' ')[0]}`}
+              <ImageWithFallback
+                src={`/images/logo/logo.png`}
                 alt={cat}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-90 dark:opacity-75"
               />
@@ -70,7 +72,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-10">
             <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tight">New Arrivals</h2>
-            <Link href="/category/Oversized%20Tees" className="text-sm font-bold text-blue-600 hover:text-blue-800 uppercase tracking-wider hidden sm:block">View All</Link>
+            <Link href="/category/OversizedTees" className="text-sm font-bold text-blue-600 hover:text-blue-800 uppercase tracking-wider hidden sm:block">View All</Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {newArrivals.map((product) => (
@@ -85,12 +87,12 @@ export default function Home() {
         <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-10 text-center uppercase tracking-tight">Featured Collections</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { name: "Acid Wash", img: "https://via.placeholder.com/600x800/333333/ffffff?text=ACID+WASH" },
-            { name: "Anime Print", img: "https://via.placeholder.com/600x800/1e3a8a/ffffff?text=ANIME" },
-            { name: "Minimalist", img: "https://via.placeholder.com/600x800/f3f4f6/000000?text=MINIMAL" }
+            { name: "Acid Wash", img: "/images/logo/logo.png" },
+            { name: "Anime Print", img: "/images/logo/logo.png" },
+            { name: "Minimalist", img: "/images/logo/logo.png" }
           ].map((col) => (
-            <Link key={col.name} href={`/category/Oversized%20Tees`} className="group relative block aspect-[3/4] overflow-hidden bg-gray-200 dark:bg-gray-800">
-               <img src={col.img} alt={col.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+            <Link key={col.name} href={`/category/OversizedTees`} className="group relative block aspect-[3/4] overflow-hidden bg-gray-200 dark:bg-gray-800">
+               <ImageWithFallback src={col.img} alt={col.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300 flex items-center justify-center">
                  <div className="bg-white dark:bg-black px-8 py-4 text-center transform translate-y-4 group-hover:translate-y-0 transition">
                    <h3 className="text-xl font-bold text-gray-900 dark:text-white uppercase">{col.name}</h3>
@@ -118,14 +120,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-4">Join The Cult</h2>
-            <p className="text-gray-400">Tag @UrbanFit on Instagram to be featured.</p>
+            <p className="text-gray-400">Tag @EXTRAALAYER on Instagram to be featured.</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
               <div key={i} className="aspect-square relative group overflow-hidden bg-gray-900">
-                <img
-                  src={`https://via.placeholder.com/400x400/222222/555555?text=IG+Post+${i}`}
-                  alt={`Instagram Post ${i}`}
+                <ImageWithFallback
+                  src={`/images/logo/logo.png`}
+                  alt={'Instagram Post ' + i}
                   className="w-full h-full object-cover group-hover:opacity-50 transition duration-300"
                 />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
@@ -140,18 +142,18 @@ export default function Home() {
   );
 }
 
-function ProductCard({ product }: { product: any }) {
+function ProductCard({ product }: { product: Product }) {
   return (
     <div className="group relative bg-white dark:bg-gray-800 flex flex-col">
       <div className="relative aspect-[3/4] bg-gray-200 dark:bg-gray-900 overflow-hidden">
-        <img
+        <ImageWithFallback
           src={product.image}
           alt={product.name}
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-100 group-hover:opacity-0"
         />
-        <img
+        <ImageWithFallback
           src={product.hoverImage}
-          alt={`${product.name} back view`}
+          alt={product.name + ' back view'}
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-0 group-hover:opacity-100"
         />
         {product.discount > 0 && (
@@ -160,7 +162,7 @@ function ProductCard({ product }: { product: any }) {
           </div>
         )}
         <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/60 to-transparent">
-           <Link href={`/product/${product.id}`} className="w-full block text-center bg-white text-black font-bold py-2 text-sm uppercase hover:bg-gray-200">
+           <Link href={'/product/' + product.id} className="w-full block text-center bg-white text-black font-bold py-2 text-sm uppercase hover:bg-gray-200">
              Quick View
            </Link>
         </div>
@@ -168,7 +170,7 @@ function ProductCard({ product }: { product: any }) {
       <div className="pt-4 pb-2">
         <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider mb-1">{product.category}</p>
         <h3 className="text-sm font-bold text-gray-900 dark:text-white truncate mb-1">
-          <Link href={`/product/${product.id}`}>
+          <Link href={'/product/' + product.id}>
             <span aria-hidden="true" className="absolute inset-0" />
             {product.name}
           </Link>

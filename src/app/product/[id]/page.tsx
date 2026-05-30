@@ -1,11 +1,20 @@
 import Link from "next/link";
 import products from "@/data/products.json";
 import ProductClient from "./ProductClient";
+import PincodeChecker from "@/components/ui/PincodeChecker";
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 export async function generateStaticParams() {
   return products.map((product) => ({
     id: product.id,
   }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const product = products.find(p => p.id === id);
+  if (!product) return { title: "Not Found | EXTRAALAYER" };
+  return { title: `${product.name} | EXTRAALAYER`, description: product.description };
 }
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
@@ -39,13 +48,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <div className="lg:w-1/2">
           <div className="grid grid-cols-2 gap-4">
              <div className="col-span-2 aspect-[3/4] bg-gray-100 dark:bg-gray-800 relative">
-               <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+               <ImageWithFallback src={product.image} alt={product.name} />
              </div>
              <div className="aspect-[3/4] bg-gray-100 dark:bg-gray-800 relative">
-               <img src={hoverImage || product.image} alt="Detail 1" className="w-full h-full object-cover" />
+               <ImageWithFallback src={hoverImage || product.image} alt="Detail 1" />
              </div>
              <div className="aspect-[3/4] bg-gray-100 dark:bg-gray-800 relative">
-               <img src={product.image} alt="Detail 2" className="w-full h-full object-cover" />
+               <ImageWithFallback src={product.image} alt="Detail 2" />
              </div>
           </div>
         </div>
@@ -71,18 +80,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
           <ProductClient product={product} />
 
-          <div className="mt-10 border border-gray-200 dark:border-gray-800 rounded-lg p-6 bg-gray-50 dark:bg-gray-900/50">
-            <h3 className="font-bold text-sm uppercase mb-4 flex items-center"><span className="mr-2">🚚</span> Delivery & Returns</h3>
-            <div className="flex space-x-2 mb-4">
-              <input type="text" placeholder="Enter Pincode" className="flex-1 border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm focus:outline-none" />
-              <button className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 text-sm font-bold uppercase">Check</button>
-            </div>
-            <ul className="text-sm text-gray-500 dark:text-gray-400 space-y-2">
-              <li>Free delivery on orders over $50</li>
-              <li>Cash on Delivery available</li>
-              <li>Easy 30 days return and exchange</li>
-            </ul>
-          </div>
+          <PincodeChecker />
         </div>
       </div>
 
@@ -92,8 +90,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {products.slice(10, 14).map(p => (
             <Link key={p.id} href={`/product/${p.id}`} className="group block">
-              <div className="aspect-[3/4] bg-gray-100 overflow-hidden mb-3">
-                <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <div className="aspect-[3/4] bg-gray-100 relative overflow-hidden mb-3">
+                <ImageWithFallback src={p.image} alt={p.name} className="group-hover:scale-105 transition duration-500" />
               </div>
               <h3 className="text-sm font-bold truncate">{p.name}</h3>
               <p className="text-sm text-gray-500">${p.price.toFixed(2)}</p>

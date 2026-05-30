@@ -1,10 +1,11 @@
 'use client';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 import { useState, useRef } from 'react';
-import { useCart } from '@/context/CartContext';
+import { useCartStore } from '@/store/useCartStore';
 
 export default function CustomDesignPage() {
-  const { addToCart } = useCart();
+  const { addToCart } = useCartStore();
   const [selectedSize, setSelectedSize] = useState('M');
   const [selectedColor, setSelectedColor] = useState('#ffffff');
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -150,7 +151,7 @@ export default function CustomDesignPage() {
 
             {/* Uploaded Design Placement */}
             {uploadedImage ? (
-              <img
+              <ImageWithFallback
                 src={uploadedImage}
                 alt="Your custom design"
                 onPointerDown={handlePointerDown}
@@ -299,14 +300,14 @@ export default function CustomDesignPage() {
                   id: `custom-${Math.random()}`,
                   name: 'Custom Designed T-Shirt',
                   price: 29.99,
-                  image: uploadedImage || 'https://via.placeholder.com/150?text=Custom+Design',
+                  image: uploadedImage || '/images/logo/logo.png',
                   category: 'Custom',
                   size: selectedSize,
                   quantity: 1,
                   isCustom: true,
                   color: selectedColor
                 });
-                alert('Added to cart!');
+                window.confirm('Added to cart!');
               }}
               className="px-8 py-4 rounded-md font-bold text-lg transition-colors bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
             >

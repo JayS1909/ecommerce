@@ -1,4 +1,5 @@
 'use client';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 import { useState } from 'react';
 import products from '@/data/products.json';
@@ -29,8 +30,8 @@ export default function AdminPage() {
       name: newName,
       category: "Men",
       price: 29.99,
-      image: "https://via.placeholder.com/300x400?text=New+Product",
-      hoverImage: "https://via.placeholder.com/300x400?text=New+Product+Hover",
+      image: "/images/logo/logo.png",
+      hoverImage: "/images/logo/logo.png",
       description: "A newly added product.",
       fabric: "100% Cotton",
       fit: "Regular",
@@ -43,14 +44,28 @@ export default function AdminPage() {
     setAdminProducts(prev => [newProduct, ...prev]);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'admin123') {
-      setIsAuthenticated(true);
-      setError('');
-    } else {
-      setError('Invalid password. Try admin123');
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        setIsAuthenticated(true);
+        setError('');
+      } else {
+        setError('Invalid password. Check environment variables');
+      }
+    } catch (err) {
+      setError('Failed to login');
     }
+  };
+
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    setIsAuthenticated(false);
   };
 
   if (!isAuthenticated) {
@@ -81,7 +96,7 @@ export default function AdminPage() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">Admin Dashboard</h1>
         <div className="flex space-x-4">
-          <button onClick={() => setIsAuthenticated(false)} className="border border-gray-300 dark:border-gray-700 px-4 py-2 font-bold uppercase text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+          <button onClick={handleLogout} className="border border-gray-300 dark:border-gray-700 px-4 py-2 font-bold uppercase text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition">
             Logout
           </button>
         </div>
@@ -126,7 +141,7 @@ export default function AdminPage() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="h-10 w-10 flex-shrink-0">
-                        <img className="h-10 w-10 rounded-full object-cover" src={product.image} alt="" />
+                        <ImageWithFallback className="h-10 w-10 rounded-full object-cover" src={product.image} alt="" />
                       </div>
                       <div className="ml-4">
                         <div className="text-sm font-medium text-gray-900 dark:text-white truncate w-48">{product.name}</div>
@@ -145,7 +160,7 @@ export default function AdminPage() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
                        <span className="text-sm text-gray-900 dark:text-white font-medium">In Stock</span>
-                       <button onClick={() => window.alert('Stock level updated.')} className="text-xs border border-gray-300 dark:border-gray-600 rounded px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition">Update</button>
+                       <button onClick={() => window.window.confirm('Stock level updated.')} className="text-xs border border-gray-300 dark:border-gray-600 rounded px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition">Update</button>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -180,7 +195,7 @@ export default function AdminPage() {
               {[
                 { name: "John Doe", email: "john@example.com", role: "Customer", status: "Active" },
                 { name: "Jane Smith", email: "jane@example.com", role: "Customer", status: "Active" },
-                { name: "Admin Root", email: "admin@urbanfit.com", role: "Admin", status: "Active" },
+                { name: "Admin Root", email: "admin@EXTRAALAYER.com", role: "Admin", status: "Active" },
               ].map((user, idx) => (
                 <tr key={idx}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 dark:text-white">{user.name}</td>

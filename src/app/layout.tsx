@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { CartProvider } from "@/context/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ClothingCo E-commerce",
-  description: "A premium clothing e-commerce store",
+  title: "EXTRAALAYER",
+  description: "Premium oversized tees and hoodies designed for the streets. Comfort meets unapologetic style.",
 };
 
 export default function RootLayout({
@@ -31,11 +30,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
-        <CartProvider>
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </CartProvider>
+        <Navbar />
+        <main className="flex-grow">{children}</main>
+        <Footer />
       </body>
     </html>
   );

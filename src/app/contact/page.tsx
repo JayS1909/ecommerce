@@ -6,7 +6,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <div>
             <h3 className="font-bold uppercase text-sm mb-2">Email Support</h3>
-            <p className="text-gray-600 dark:text-gray-400">support@urbanfit.com</p>
+            <p className="text-gray-600 dark:text-gray-400">support@EXTRAALAYER.com</p>
           </div>
           <div>
             <h3 className="font-bold uppercase text-sm mb-2">WhatsApp / Phone</h3>

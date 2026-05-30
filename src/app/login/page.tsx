@@ -18,15 +18,15 @@ export default function LoginPage() {
   const handleVerifyOtp = (e: React.FormEvent) => {
     e.preventDefault();
     if (otp === '1234') {
-      alert('Login successful!');
+      window.confirm('Login successful!');
       window.location.href = '/account';
     } else {
-      alert('Invalid OTP. Please use 1234 for testing.');
+      window.confirm('Invalid OTP. Please use 1234 for testing.');
     }
   };
 
   const handleGoogleLogin = () => {
-    alert('Mock Google/Gmail Login successful!');
+    window.confirm('Mock Google/Gmail Login successful!');
     window.location.href = '/account';
   };
 
@@ -86,7 +86,7 @@ export default function LoginPage() {
           <form onSubmit={handleVerifyOtp}>
             <div className="mb-6">
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 text-center">
-                We've sent a 4-digit code to <span className="font-bold text-gray-900 dark:text-white">{contactInfo}</span>
+                We&apos;ve sent a 4-digit code to <span className="font-bold text-gray-900 dark:text-white">{contactInfo}</span>
               </p>
               <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2 text-center" htmlFor="otp">
                 Enter OTP (Hint: 1234)
@@ -122,7 +122,7 @@ export default function LoginPage() {
         )}
 
         <p className="text-center text-gray-600 dark:text-gray-400 text-sm mt-8">
-          Don't have an account? <Link href="/register" className="text-blue-600 hover:underline">Register</Link>
+          Don&apos;t have an account? <Link href="/register" className="text-blue-600 hover:underline">Register</Link>
         </p>
       </div>
     </div>
