@@ -1,48 +1,130 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import products from '@/data/products.json';
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
+type Product = { id: string, name: string, price: number, image: string, hoverImage: string, category: string, discount: number, description: string, fabric: string, fit: string, washCare: string, isNew: boolean, isBestSeller: boolean, collection: string };
+
 export default function AdminPage() {
-  const [adminProducts, setAdminProducts] = useState(products.slice(0, 10));
+  const [adminProducts, setAdminProducts] = useState<Product[]>(products.slice(0, 10));
 
-  const handleDelete = (id: string) => {
-    setAdminProducts(prev => prev.filter(p => p.id !== id));
+  // Edit and Delete Modals
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
+
+  const handleDelete = () => {
+    if(currentProduct) {
+      setAdminProducts(prev => prev.filter(p => p.id !== currentProduct.id));
+      setIsDeleteModalOpen(false);
+      setCurrentProduct(null);
+    }
   };
 
-  const handleEdit = (id: string) => {
-    window.prompt("Edit product name:", adminProducts.find(p => p.id === id)?.name);
+  const handleEditSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if(currentProduct) {
+       setAdminProducts(prev => prev.map(p => p.id === currentProduct.id ? currentProduct : p));
+       setIsEditModalOpen(false);
+       setCurrentProduct(null);
+    }
   };
 
-  const handleAdd = () => {
-    const newName = window.prompt("Enter new product name:");
-    if (!newName) return;
-    const newProduct = {
-      id: Math.random().toString(),
-      name: newName,
-      category: "Men",
-      price: 29.99,
-      image: "/images/logo/logo.png",
-      hoverImage: "/images/logo/logo.png",
-      description: "A newly added product.",
-      fabric: "100% Cotton",
-      fit: "Regular",
-      washCare: "Machine Wash Cold",
-      isNew: true,
-      isBestSeller: false,
-      collection: "Summer",
-      discount: 0
-    };
-    setAdminProducts(prev => [newProduct, ...prev]);
+  const handleAddSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if(currentProduct) {
+        const newProduct = {
+          ...currentProduct,
+          id: Math.random().toString(),
+          image: "/images/logo/logo.png",
+          hoverImage: "/images/logo/logo.png",
+          isNew: true,
+          discount: 0
+        };
+        setAdminProducts(prev => [newProduct, ...prev]);
+        setIsAddModalOpen(false);
+        setCurrentProduct(null);
+    }
   };
-
-  const handleLogout = async () => {
+const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
     window.location.href = '/login';
   };
 
   return (
+    <>
+
+      {/* Delete Modal */}
+      {isDeleteModalOpen && currentProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-900 p-8 rounded shadow-lg max-w-sm w-full">
+            <h2 className="text-xl font-bold mb-4">Confirm Deletion</h2>
+            <p className="mb-6">Are you sure you want to delete {currentProduct.name}?</p>
+            <div className="flex justify-end space-x-4">
+              <button onClick={() => setIsDeleteModalOpen(false)} className="px-4 py-2 border dark:border-gray-700">Cancel</button>
+              <button onClick={handleDelete} className="px-4 py-2 bg-red-600 text-white">Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {isEditModalOpen && currentProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-900 p-8 rounded shadow-lg max-w-md w-full">
+            <h2 className="text-xl font-bold mb-4">Edit Product</h2>
+            <form onSubmit={handleEditSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-bold mb-1">Name</label>
+                <input required type="text" value={currentProduct.name} onChange={(e) => setCurrentProduct({...currentProduct, name: e.target.value})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-1">Price</label>
+                <input required type="number" value={currentProduct.price} onChange={(e) => setCurrentProduct({...currentProduct, price: parseFloat(e.target.value)})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-1">Image Upload (Mock)</label>
+                <input type="file" className="w-full p-2 border dark:border-gray-700 bg-transparent text-sm" />
+              </div>
+              <div className="flex justify-end space-x-4 pt-4">
+                <button type="button" onClick={() => setIsEditModalOpen(false)} className="px-4 py-2 border dark:border-gray-700">Cancel</button>
+                <button type="submit" className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black font-bold">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Add Modal */}
+      {isAddModalOpen && currentProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-900 p-8 rounded shadow-lg max-w-md w-full">
+            <h2 className="text-xl font-bold mb-4">Add New Product</h2>
+            <form onSubmit={handleAddSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-bold mb-1">Name</label>
+                <input required type="text" value={currentProduct.name} onChange={(e) => setCurrentProduct({...currentProduct, name: e.target.value})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-1">Price</label>
+                <input required type="number" value={currentProduct.price} onChange={(e) => setCurrentProduct({...currentProduct, price: parseFloat(e.target.value)})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold mb-1">Image Upload (Mock)</label>
+                <input type="file" className="w-full p-2 border dark:border-gray-700 bg-transparent text-sm" />
+              </div>
+              <div className="flex justify-end space-x-4 pt-4">
+                <button type="button" onClick={() => setIsAddModalOpen(false)} className="px-4 py-2 border dark:border-gray-700">Cancel</button>
+                <button type="submit" className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black font-bold">Add Product</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">Admin Dashboard</h1>
@@ -71,7 +153,7 @@ export default function AdminPage() {
       <div className="bg-white dark:bg-gray-900 shadow-sm border dark:border-gray-800 mb-12">
         <div className="px-6 py-5 flex justify-between items-center bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-700">
           <h3 className="text-lg font-bold uppercase tracking-tight text-gray-900 dark:text-white">Product Inventory</h3>
-          <button onClick={handleAdd} className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 font-bold uppercase text-xs hover:bg-gray-800 transition">
+          <button onClick={() => { setCurrentProduct({ id: "", name: "", category: "Men", price: 0, description: "", image: "", hoverImage: "", fabric: "", fit: "", washCare: "", isNew: true, isBestSeller: false, collection: "", discount: 0 }); setIsAddModalOpen(true); }} className="bg-black dark:bg-white text-white dark:text-black px-4 py-2 font-bold uppercase text-xs hover:bg-gray-800 transition">
             + Add Product
           </button>
         </div>
@@ -115,8 +197,8 @@ export default function AdminPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button onClick={() => handleEdit(product.id)} className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-4">Edit</button>
-                    <button onClick={() => handleDelete(product.id)} className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">Delete</button>
+                    <button onClick={() => { setCurrentProduct(product); setIsEditModalOpen(true); }} className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 mr-4">Edit</button>
+                    <button onClick={() => { setCurrentProduct(product); setIsDeleteModalOpen(true); }} className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">Delete</button>
                   </td>
                 </tr>
               ))}
@@ -164,5 +246,6 @@ export default function AdminPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
