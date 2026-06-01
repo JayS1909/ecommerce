@@ -7,7 +7,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-2">
             <span className="font-extrabold text-3xl tracking-tighter text-white mb-4 block">EXTRAALAYER</span>
-            <p className="text-gray-400 mb-6 max-w-sm">Premium streetwear brand offering high-quality oversized tees, hoodies, and accessories. Experience comfort like never before.</p>
+            <p className="text-gray-400 mb-4 max-w-sm">Layer Up. Stand Out. EXTRAALAYER is more than clothing. It&apos;s the extra layer of confidence you put on before you face the world.</p>
+            <div className="text-gray-400 text-sm mb-6 space-y-1">
+              <p><a href="mailto:support.extraalayer@gmail.com" className="hover:underline">support.extraalayer@gmail.com</a></p>
+              <p>+91-7719032338</p>
+            </div>
             <div className="flex space-x-4">
               <span className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center cursor-pointer hover:bg-blue-600 transition">IG</span>
               <span className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center cursor-pointer hover:bg-blue-600 transition">FB</span>
@@ -29,11 +33,12 @@ export default function Footer() {
           <div>
             <h3 className="text-sm font-bold tracking-wider uppercase mb-4 text-gray-300">Policies</h3>
             <ul className="space-y-3 text-gray-400 text-sm">
-              <li><Link href="/policies/return" className="hover:text-white transition">Return & Refund</Link></li>
-              <li><Link href="/policies/shipping" className="hover:text-white transition">Shipping Policy</Link></li>
-              <li><Link href="/policies/privacy" className="hover:text-white transition">Privacy Policy</Link></li>
-              <li><Link href="/policies/terms" className="hover:text-white transition">Terms & Conditions</Link></li>
-              <li><Link href="/policies/cancellation" className="hover:text-white transition">Cancellation Policy</Link></li>
+              <li><Link href="/return-exchange-policy" className="hover:text-white transition">Return & Exchange Policy</Link></li>
+              <li><Link href="/refund-policy" className="hover:text-white transition">Refund Policy</Link></li>
+              <li><Link href="/shipping-policy" className="hover:text-white transition">Shipping Policy</Link></li>
+              <li><Link href="/privacy-policy" className="hover:text-white transition">Privacy Policy</Link></li>
+              <li><Link href="/terms-conditions" className="hover:text-white transition">Terms & Conditions</Link></li>
+              <li><Link href="/cancellation-policy" className="hover:text-white transition">Cancellation Policy</Link></li>
             </ul>
           </div>
 

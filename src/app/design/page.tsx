@@ -307,7 +307,7 @@ export default function CustomDesignPage() {
                   isCustom: true,
                   color: selectedColor
                 });
-                window.confirm('Added to cart!');
+                alert('Added to cart!');
               }}
               className="px-8 py-4 rounded-md font-bold text-lg transition-colors bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
             >

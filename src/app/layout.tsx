@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "EXTRAALAYER",
-  description: "Premium oversized tees and hoodies designed for the streets. Comfort meets unapologetic style.",
+  description: "EXTRAALAYER is more than clothing. It's the extra layer of confidence you put on before you face the world.",
 };
 
 export default function RootLayout({

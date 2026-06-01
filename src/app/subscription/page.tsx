@@ -19,7 +19,7 @@ export default function SubscriptionPage() {
       description: 'Monthly VIP Membership',
       image: '/images/logo/logo.png',
       handler: function (response: Record<string, string>) {
-        window.confirm(`Payment successful! Payment ID: ${response.razorpay_payment_id}\nSubscription ID: ${response.razorpay_subscription_id}`);
+        alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}\nSubscription ID: ${response.razorpay_subscription_id}`);
       },
       prefill: {
         name: 'John Doe',

@@ -6,8 +6,16 @@ import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 type Product = { id: string, name: string, price: number, image: string, hoverImage: string, category: string, discount: number, description: string, fabric: string, fit: string, washCare: string, isNew: boolean, isBestSeller: boolean, collection: string };
 
+import { useRouter } from 'next/navigation';
+
 export default function AdminPage() {
   const [adminProducts, setAdminProducts] = useState<Product[]>(products.slice(0, 10));
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/admin-login');
+  };
 
   // Edit and Delete Modals
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -48,10 +56,6 @@ export default function AdminPage() {
         setIsAddModalOpen(false);
         setCurrentProduct(null);
     }
-  };
-const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    window.location.href = '/login';
   };
 
   return (
@@ -193,7 +197,7 @@ const handleLogout = async () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
                        <span className="text-sm text-gray-900 dark:text-white font-medium">In Stock</span>
-                       <button onClick={() => window.confirm('Stock level updated.')} className="text-xs border border-gray-300 dark:border-gray-600 rounded px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition">Update</button>
+                       <button onClick={() => alert('Stock level updated.')} className="text-xs border border-gray-300 dark:border-gray-600 rounded px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 transition">Update</button>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

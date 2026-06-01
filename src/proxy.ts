@@ -7,7 +7,7 @@ export default function proxy(request: NextRequest) {
     const authCookie = request.cookies.get('admin_session');
 
     if (!authCookie || authCookie.value !== 'authenticated') {
-        return NextResponse.redirect(new URL('/login', request.url));
+        return NextResponse.redirect(new URL('/admin-login', request.url));
     }
   }
 

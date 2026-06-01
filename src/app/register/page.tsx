@@ -18,15 +18,15 @@ export default function RegisterPage() {
   const handleVerifyOtp = (e: React.FormEvent) => {
     e.preventDefault();
     if (otp === '1234') {
-      window.confirm('Registration successful!');
+      alert('Registration successful!');
       window.location.href = '/account';
     } else {
-      window.confirm('Invalid OTP. Please use 1234 for testing.');
+      alert('Invalid OTP. Please use 1234 for testing.');
     }
   };
 
   const handleGoogleRegister = () => {
-    window.confirm('Mock Google/Gmail Registration successful!');
+    alert('Mock Google/Gmail Registration successful!');
     window.location.href = '/account';
   };
 

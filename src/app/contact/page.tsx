@@ -6,11 +6,22 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <div>
             <h3 className="font-bold uppercase text-sm mb-2">Email Support</h3>
-            <p className="text-gray-600 dark:text-gray-400">support@EXTRAALAYER.com</p>
+            <p className="text-gray-600 dark:text-gray-400"><a href="mailto:support.extraalayer@gmail.com" className="hover:underline">support.extraalayer@gmail.com</a></p>
+            <p className="text-gray-600 dark:text-gray-400"><a href="mailto:extraalayer@gmail.com" className="hover:underline">extraalayer@gmail.com</a></p>
           </div>
           <div>
-            <h3 className="font-bold uppercase text-sm mb-2">WhatsApp / Phone</h3>
-            <p className="text-gray-600 dark:text-gray-400">+1 (555) 019-2837</p>
+            <h3 className="font-bold uppercase text-sm mb-2">WhatsApp</h3>
+            <p className="text-gray-600 dark:text-gray-400">+91-7719032338</p>
+          </div>
+          <div className="md:col-span-2">
+            <h3 className="font-bold uppercase text-sm mb-2">Address</h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              6/35 South Wing,<br/>
+              Pratik Nagar Sector 3 & 4,<br/>
+              Mohanwadi, Yerwada,<br/>
+              Pune - 411006,<br/>
+              Maharashtra, India
+            </p>
           </div>
         </div>
         <form className="space-y-4">

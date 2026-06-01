@@ -1,8 +1,3 @@
-export const metadata = {
-  title: 'Return & Exchange Policy | EXTRAALAYER',
-  description: 'Easy 7-day returns and exchanges on EXTRAALAYER streetwear.',
-};
-
 export default function ReturnExchangePolicyPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-16 sm:py-24">
@@ -41,7 +36,7 @@ export default function ReturnExchangePolicyPage() {
         <section className="mb-10">
           <h2 className="text-2xl font-bold uppercase text-gray-900 dark:text-white mb-4">Contact</h2>
           <p>Email: <a href="mailto:support.extraalayer@gmail.com" className="text-blue-600 dark:text-blue-400">support.extraalayer@gmail.com</a></p>
-          <p>WhatsApp: +91 7719032338</p>
+          <p>WhatsApp: +91-7719032338</p>
         </section>
       </div>
     </div>

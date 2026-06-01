@@ -52,7 +52,7 @@ export default function ReturnsPage() {
                   </div>
                 </div>
                 <div className="pt-4">
-                  <button type="button" onClick={() => window.confirm('Return Request Submitted!')} className="bg-black dark:bg-white text-white dark:text-black font-black uppercase px-8 py-4 w-full md:w-auto">Submit Request</button>
+                  <button type="button" onClick={() => alert('Return Request Submitted!')} className="bg-black dark:bg-white text-white dark:text-black font-black uppercase px-8 py-4 w-full md:w-auto">Submit Request</button>
                 </div>
               </form>
             </div>

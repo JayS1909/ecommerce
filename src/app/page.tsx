@@ -22,7 +22,7 @@ export default function Home() {
         </div>
         <div className="relative z-10 text-center px-4 max-w-4xl">
           <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter uppercase leading-tight">Define Your <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">Own Rules</span></h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto font-medium">Premium oversized tees and hoodies designed for the streets. Comfort meets unapologetic style.</p>
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto font-medium">EXTRAALAYER is more than clothing. It&apos;s the extra layer of confidence you put on before you face the world.</p>
           <div className="flex justify-center space-x-4">
             <Link href="/category/OversizedTees" className="bg-white text-black px-8 py-4 rounded-none font-bold hover:bg-gray-200 transition uppercase tracking-wider text-sm">
               Shop Oversized

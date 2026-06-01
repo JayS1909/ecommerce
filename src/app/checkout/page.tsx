@@ -40,7 +40,7 @@ export default function CheckoutPage() {
   const onSubmit = () => {
     // In a real app, this would process the payment and create the order on the backend
     // Removed console.log
-    window.confirm('Order Placed Successfully! Your items are on the way.');
+    alert('Order Placed Successfully! Your items are on the way.');
     clearCart();
     router.push('/account'); // Or an order success page
   };

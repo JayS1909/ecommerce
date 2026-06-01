@@ -18,15 +18,15 @@ export default function LoginPage() {
   const handleVerifyOtp = (e: React.FormEvent) => {
     e.preventDefault();
     if (otp === '1234') {
-      window.confirm('Login successful!');
+      alert('Login successful!');
       window.location.href = '/account';
     } else {
-      window.confirm('Invalid OTP. Please use 1234 for testing.');
+      alert('Invalid OTP. Please use 1234 for testing.');
     }
   };
 
   const handleGoogleLogin = () => {
-    window.confirm('Mock Google/Gmail Login successful!');
+    alert('Mock Google/Gmail Login successful!');
     window.location.href = '/account';
   };
 

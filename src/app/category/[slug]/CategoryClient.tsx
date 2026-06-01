@@ -98,8 +98,10 @@ export default function CategoryClient({ decodedSlug, initialProducts }: { decod
         </div>
 
         {filteredAndSortedProducts.length === 0 ? (
-           <div className="text-center py-20">
-             <p className="text-gray-500">No products found matching your filters.</p>
+           <div className="text-center py-20 max-w-2xl mx-auto">
+             <p className="text-gray-500 leading-relaxed">
+               We’re constantly working on fresh, trend-forward designs that we believe you’ll absolutely love. Right now, we’re starting with a limited selection to keep your shopping experience simple, easy, and clutter-free — but exciting new styles are already on the way! Stay tuned, shop with confidence, and thank you for being part of our journey.
+             </p>
            </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
