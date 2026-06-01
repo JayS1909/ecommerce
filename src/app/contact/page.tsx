@@ -11,16 +11,18 @@ export default function ContactPage() {
           </div>
           <div>
             <h3 className="font-bold uppercase text-sm mb-2">WhatsApp</h3>
-            <p className="text-gray-600 dark:text-gray-400">+91-7719032338</p>
+            <p className="text-gray-600 dark:text-gray-400">+91 7719032338</p>
           </div>
           <div className="md:col-span-2">
             <h3 className="font-bold uppercase text-sm mb-2">Address</h3>
             <p className="text-gray-600 dark:text-gray-400">
-              6/35 South Wing,<br/>
-              Pratik Nagar Sector 3 & 4,<br/>
-              Mohanwadi, Yerwada,<br/>
-              Pune - 411006,<br/>
-              Maharashtra, India
+              6/35 South Wing<br/>
+              Pratik Nagar Sector 3 & 4<br/>
+              Mohanwadi<br/>
+              Yerwada<br/>
+              Pune - 411006<br/>
+              Maharashtra<br/>
+              India
             </p>
           </div>
         </div>

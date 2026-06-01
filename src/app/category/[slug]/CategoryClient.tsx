@@ -99,9 +99,11 @@ export default function CategoryClient({ decodedSlug, initialProducts }: { decod
 
         {filteredAndSortedProducts.length === 0 ? (
            <div className="text-center py-20 max-w-2xl mx-auto">
-             <p className="text-gray-500 leading-relaxed">
-               We’re constantly working on fresh, trend-forward designs that we believe you’ll absolutely love. Right now, we’re starting with a limited selection to keep your shopping experience simple, easy, and clutter-free — but exciting new styles are already on the way! Stay tuned, shop with confidence, and thank you for being part of our journey.
-             </p>
+             <div className="text-gray-500 leading-relaxed space-y-4">
+               <p>We’re constantly working on fresh, trend-forward designs that we believe you’ll absolutely love.</p>
+               <p>Right now, we’re starting with a limited selection to keep your shopping experience simple, easy, and clutter-free — but exciting new styles are already on the way.</p>
+               <p>Stay tuned, shop with confidence, and thank you for being part of our journey.</p>
+             </div>
            </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

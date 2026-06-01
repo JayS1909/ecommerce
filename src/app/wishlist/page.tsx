@@ -69,7 +69,7 @@ export default function WishlistPage() {
               <div className="relative aspect-[3/4] overflow-hidden bg-gray-100 dark:bg-gray-900">
                 <Link href={`/product/${product.id}`}>
                   <ImageWithFallback
-                    src={product.image || "https://via.placeholder.com/400x500"}
+                    src={product.image}
                     alt={product.name}
                     className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                   />

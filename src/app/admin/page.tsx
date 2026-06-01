@@ -214,9 +214,43 @@ export default function AdminPage() {
         </div>
       </div>
 
+      <div className="bg-white dark:bg-gray-900 shadow-sm border dark:border-gray-800 mb-12">
+        <div className="px-6 py-5 flex justify-between items-center bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-700">
+          <h3 className="text-lg font-bold uppercase tracking-tight text-gray-900 dark:text-white">Order Management</h3>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-800">
+              <tr>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Order ID</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Customer</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Date</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Total</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+              {[
+                { id: "ORD-1234", customer: "John Doe", date: "2026-06-01", total: 129.98, status: "Processing" },
+                { id: "ORD-1235", customer: "Jane Smith", date: "2026-06-02", total: 89.50, status: "Shipped" },
+                { id: "ORD-1236", customer: "Bob Ross", date: "2026-06-02", total: 249.99, status: "Delivered" },
+              ].map((order, idx) => (
+                <tr key={idx}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 dark:text-white">{order.id}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{order.customer}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{order.date}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 dark:text-white">${order.total.toFixed(2)}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-blue-600 uppercase tracking-wider">{order.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div className="bg-white dark:bg-gray-900 shadow-sm border dark:border-gray-800">
         <div className="px-6 py-5 flex justify-between items-center bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-700">
-          <h3 className="text-lg font-bold uppercase tracking-tight text-gray-900 dark:text-white">User Database</h3>
+          <h3 className="text-lg font-bold uppercase tracking-tight text-gray-900 dark:text-white">Customer List</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

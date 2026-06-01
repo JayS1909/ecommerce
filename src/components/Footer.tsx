@@ -10,7 +10,7 @@ export default function Footer() {
             <p className="text-gray-400 mb-4 max-w-sm">Layer Up. Stand Out. EXTRAALAYER is more than clothing. It&apos;s the extra layer of confidence you put on before you face the world.</p>
             <div className="text-gray-400 text-sm mb-6 space-y-1">
               <p><a href="mailto:support.extraalayer@gmail.com" className="hover:underline">support.extraalayer@gmail.com</a></p>
-              <p>+91-7719032338</p>
+              <p>+91 7719032338</p>
             </div>
             <div className="flex space-x-4">
               <span className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center cursor-pointer hover:bg-blue-600 transition">IG</span>

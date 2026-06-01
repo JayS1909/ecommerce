@@ -27,7 +27,7 @@ export default function TermsConditionsPage() {
         <h2 className="text-2xl font-bold mt-8 mb-4">Contact Information</h2>
         <p>Questions about the Terms of Service should be sent to us at:</p>
         <p>Email: <a href="mailto:support.extraalayer@gmail.com" className="text-blue-600 dark:text-blue-400">support.extraalayer@gmail.com</a></p>
-        <p>WhatsApp: +91-7719032338</p>
+        <p>WhatsApp: +91 7719032338</p>
       </div>
     </div>
   );

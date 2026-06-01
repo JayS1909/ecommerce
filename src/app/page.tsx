@@ -1,6 +1,7 @@
 type Product = { id: string, name: string, price: number, image: string, hoverImage: string, category: string, discount: number };
 
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
+import WishlistButton from "@/components/ui/WishlistButton";
 import Link from "next/link";
 import products from "@/data/products.json";
 
@@ -157,10 +158,13 @@ function ProductCard({ product }: { product: Product }) {
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-0 group-hover:opacity-100"
         />
         {product.discount > 0 && (
-          <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1">
+          <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 z-10">
             -{product.discount}%
           </div>
         )}
+        <div className="absolute top-2 right-2 z-20">
+          <WishlistButton product={product} />
+        </div>
         <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/60 to-transparent">
            <Link href={'/product/' + product.id} className="w-full block text-center bg-white text-black font-bold py-2 text-sm uppercase hover:bg-gray-200">
              Quick View

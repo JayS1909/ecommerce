@@ -5,8 +5,9 @@ export default function AboutPage() {
       <div className="prose dark:prose-invert mx-auto space-y-6">
         <p>EXTRAALAYER was built on one simple belief: everyday fashion should never feel ordinary.</p>
         <p>Born from a passion for self-expression and shaped by the worlds of street culture, anime aesthetics, bold graphics, and minimal design — the brand was created for people who move with intention.</p>
-        <p>This isn&apos;t just streetwear. This is your Identity.</p>
-        <p className="font-bold">EXTRAALAYER — Layer Up. Stand Out.</p>
+        <p>This isn&apos;t just streetwear.</p>
+        <p>This is your Identity.</p>
+        <p>EXTRAALAYER — Layer Up. Stand Out.</p>
 
         <h2 className="text-2xl font-bold mt-8 mb-4">Our Vision</h2>
         <p>To become a globally recognized streetwear label that redefines how a generation dresses — where fashion is no longer just clothing, but a daily act of self-expression, individuality, and bold confidence.</p>
