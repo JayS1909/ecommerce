@@ -1,30 +1,60 @@
 
 'use client';
-type Product = { id: string, name: string, price: number, image: string, hoverImage: string, category: string, sizes?: string[] };
+type Product = {
+  id: string,
+  name: string,
+  price: number,
+  image: string,
+  hoverImage: string,
+  category: string,
+  subcategory?: string,
+  collection?: string,
+  color?: string,
+  sizes?: string[]
+};
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
-import { useWishlistStore } from '@/store/useWishlistStore';
-import { Heart } from 'lucide-react';
+import WishlistButton from "@/components/ui/WishlistButton";
 
 export default function CategoryClient({ decodedSlug, initialProducts }: { decodedSlug: string, initialProducts: Product[] }) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [maxPrice, setMaxPrice] = useState<number>(100);
   const [sortOption, setSortOption] = useState('Newest');
-  const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
+
+  // Extract unique filter options from initial products
+  const availableSubcategories = useMemo(() => Array.from(new Set(initialProducts.map(p => p.subcategory).filter(Boolean))), [initialProducts]);
+  const availableCollections = useMemo(() => Array.from(new Set(initialProducts.map(p => p.collection).filter(Boolean))), [initialProducts]);
+  const availableColors = useMemo(() => Array.from(new Set(initialProducts.map(p => p.color).filter(Boolean))), [initialProducts]);
 
   const filteredAndSortedProducts = useMemo(() => {
     let result = [...initialProducts];
 
-    // Dummy size filter (randomly assigns sizes to products if not present for mock purposes)
     if (selectedSize) {
        result = result.filter(p => {
-           const sizes = p.sizes || ['S', 'M', 'L', 'XL'];
+           const sizes = p.sizes || ['S', 'M', 'L', 'XL', 'XXL', 'One Size'];
            return sizes.includes(selectedSize);
        });
     }
 
-    // Sort
+    if (selectedSubcategory) {
+        result = result.filter(p => p.subcategory === selectedSubcategory);
+    }
+
+    if (selectedCollection) {
+        result = result.filter(p => p.collection === selectedCollection);
+    }
+
+    if (selectedColor) {
+        result = result.filter(p => p.color === selectedColor);
+    }
+
+    result = result.filter(p => p.price <= maxPrice);
+
     switch (sortOption) {
       case 'Price: Low to High':
         result.sort((a, b) => a.price - b.price);
@@ -40,16 +70,7 @@ export default function CategoryClient({ decodedSlug, initialProducts }: { decod
     }
 
     return result;
-  }, [initialProducts, selectedSize, sortOption]);
-
-  const toggleWishlist = (product: Product, e: React.MouseEvent) => {
-    e.preventDefault();
-    if (wishlist.find(i => i.id === product.id)) {
-      removeFromWishlist(product.id);
-    } else {
-      addToWishlist(product);
-    }
-  };
+  }, [initialProducts, selectedSize, selectedSubcategory, selectedCollection, selectedColor, maxPrice, sortOption]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-8">
@@ -58,10 +79,48 @@ export default function CategoryClient({ decodedSlug, initialProducts }: { decod
         <div className="sticky top-24">
           <h2 className="text-xl font-bold uppercase tracking-tight mb-6">Filters</h2>
 
+          {availableSubcategories.length > 0 && (
+            <div className="mb-6 border-b border-gray-200 dark:border-gray-800 pb-6">
+              <h3 className="font-bold mb-3 uppercase text-sm">Subcategory</h3>
+              <div className="flex flex-col gap-2">
+                {availableSubcategories.map(sub => (
+                  <label key={sub} className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={selectedSubcategory === sub}
+                      onChange={() => setSelectedSubcategory(selectedSubcategory === sub ? null : (sub as string))}
+                      className="form-checkbox text-black dark:text-white"
+                    />
+                    <span className="text-sm">{sub}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {availableCollections.length > 0 && (
+            <div className="mb-6 border-b border-gray-200 dark:border-gray-800 pb-6">
+              <h3 className="font-bold mb-3 uppercase text-sm">Collection</h3>
+              <div className="flex flex-col gap-2">
+                {availableCollections.map(col => (
+                  <label key={col} className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={selectedCollection === col}
+                      onChange={() => setSelectedCollection(selectedCollection === col ? null : (col as string))}
+                      className="form-checkbox text-black dark:text-white"
+                    />
+                    <span className="text-sm">{col}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="mb-6 border-b border-gray-200 dark:border-gray-800 pb-6">
             <h3 className="font-bold mb-3 uppercase text-sm">Size</h3>
             <div className="flex flex-wrap gap-2">
-              {['S', 'M', 'L', 'XL', 'XXL'].map(size => (
+              {['S', 'M', 'L', 'XL', 'XXL', 'One Size'].map(size => (
                 <div
                   key={size}
                   onClick={() => setSelectedSize(selectedSize === size ? null : size)}
@@ -73,8 +132,38 @@ export default function CategoryClient({ decodedSlug, initialProducts }: { decod
             </div>
           </div>
 
+          {availableColors.length > 0 && (
+            <div className="mb-6 border-b border-gray-200 dark:border-gray-800 pb-6">
+              <h3 className="font-bold mb-3 uppercase text-sm">Color</h3>
+              <div className="flex flex-wrap gap-2">
+                {availableColors.map(color => (
+                  <div
+                    key={color}
+                    onClick={() => setSelectedColor(selectedColor === color ? null : (color as string))}
+                    className={`border px-3 py-1 flex items-center justify-center text-xs cursor-pointer transition ${selectedColor === color ? 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black' : 'border-gray-300 dark:border-gray-700 hover:border-black dark:hover:border-white'}`}
+                  >
+                    {color}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="mb-6 border-b border-gray-200 dark:border-gray-800 pb-6">
+            <h3 className="font-bold mb-3 uppercase text-sm">Price: Up to ${maxPrice}</h3>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="5"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+              className="w-full accent-black dark:accent-white"
+            />
+          </div>
+
           <button
-            onClick={() => { setSelectedSize(null); setSortOption('Newest'); }}
+            onClick={() => { setSelectedSize(null); setSelectedSubcategory(null); setSelectedCollection(null); setSelectedColor(null); setMaxPrice(100); setSortOption('Newest'); }}
             className="w-full border-2 border-black dark:border-white text-black dark:text-white py-3 font-bold uppercase text-sm"
           >
             Clear Filters
@@ -113,13 +202,9 @@ export default function CategoryClient({ decodedSlug, initialProducts }: { decod
                   <ImageWithFallback src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-100 group-hover:opacity-0" />
                   <ImageWithFallback src={product.hoverImage || product.image} alt="back view" className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 opacity-0 group-hover:opacity-100" />
 
-                  <button
-                    onClick={(e) => toggleWishlist(product, e)}
-                    className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow hover:text-red-500 transition z-10"
-                    title="Toggle Wishlist"
-                  >
-                    <Heart size={16} className={wishlist.find(i => i.id === product.id) ? "fill-red-500 text-red-500" : "text-black"} />
-                  </button>
+                  <div className="absolute top-2 right-2 z-10">
+                    <WishlistButton product={product} />
+                  </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/60 to-transparent">
                     <Link href={`/product/${product.id}`} className="w-full block text-center bg-white text-black font-bold py-2 text-sm uppercase hover:bg-gray-200">

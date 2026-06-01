@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EXTRAALAYER",
-  description: "EXTRAALAYER is more than clothing. It's the extra layer of confidence you put on before you face the world.",
+  title: "EXTRAALAYER | Men's Streetwear",
+  description: "EXTRAALAYER is more than clothing. It's the extra layer of confidence you put on before you face the world. Shop Men's Oversized Tees, Men's Hoodies, and Men's Bottoms.",
+  keywords: "Men's Streetwear, Men's Oversized Tees, Men's Hoodies, Men's Bottoms, Men's Fashion, Streetwear"
 };
 
 export default function RootLayout({

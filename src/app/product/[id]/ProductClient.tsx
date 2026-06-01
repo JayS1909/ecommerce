@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/store/useCartStore';
-import { useWishlistStore } from '@/store/useWishlistStore';
 import SizeGuideModal from '@/components/ui/SizeGuideModal';
-import { Check, Heart } from 'lucide-react';
+import { Check } from 'lucide-react';
+import WishlistButton from "@/components/ui/WishlistButton";
 
 type Product = {
   id: string;
@@ -19,21 +19,10 @@ type Product = {
 export default function ProductClient({ product }: { product: Product }) {
   const router = useRouter();
   const { addToCart } = useCartStore();
-  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlistStore();
   const [selectedSize, setSelectedSize] = useState('M');
   const [quantity, setQuantity] = useState(1);
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
-
-  const inWishlist = isInWishlist(product.id);
-
-  const toggleWishlist = () => {
-    if (inWishlist) {
-      removeFromWishlist(product.id);
-    } else {
-      addToWishlist(product);
-    }
-  };
 
   const handleAddToCart = () => {
     addToCart({
@@ -112,13 +101,9 @@ export default function ProductClient({ product }: { product: Product }) {
         >
           Buy It Now
         </button>
-        <button
-          onClick={toggleWishlist}
-          className="w-14 h-14 flex items-center justify-center border-2 border-gray-300 dark:border-gray-700 rounded text-gray-500 hover:border-red-500 hover:text-red-500 transition-colors"
-          aria-label="Toggle Wishlist"
-        >
-          <Heart size={24} className={inWishlist ? "fill-red-500 text-red-500" : ""} />
-        </button>
+        <div className="w-14 h-14 flex items-center justify-center border-2 border-gray-300 dark:border-gray-700 rounded text-gray-500">
+           <WishlistButton product={product} />
+        </div>
       </div>
     </>
   );

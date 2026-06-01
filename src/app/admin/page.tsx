@@ -4,7 +4,28 @@ import React, { useState } from 'react';
 import products from '@/data/products.json';
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
-type Product = { id: string, name: string, price: number, image: string, hoverImage: string, category: string, discount: number, description: string, fabric: string, fit: string, washCare: string, isNew: boolean, isBestSeller: boolean, collection: string };
+type Product = {
+  id: string,
+  name: string,
+  price: number,
+  salePrice?: number | null,
+  image: string,
+  hoverImage: string,
+  category: string,
+  subcategory?: string,
+  discount: number,
+  description: string,
+  fabric: string,
+  fit: string,
+  washCare: string,
+  isNew: boolean,
+  isBestSeller: boolean,
+  collection: string,
+  sizes?: string[],
+  color?: string,
+  inventory?: number,
+  status?: string
+};
 
 import { useRouter } from 'next/navigation';
 
@@ -75,54 +96,96 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* Edit Modal */}
-      {isEditModalOpen && currentProduct && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-900 p-8 rounded shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4">Edit Product</h2>
-            <form onSubmit={handleEditSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-bold mb-1">Name</label>
-                <input required type="text" value={currentProduct.name} onChange={(e) => setCurrentProduct({...currentProduct, name: e.target.value})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-bold mb-1">Price</label>
-                <input required type="number" value={currentProduct.price} onChange={(e) => setCurrentProduct({...currentProduct, price: parseFloat(e.target.value)})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
-              </div>
-              <div>
-                <label className="block text-sm font-bold mb-1">Image Upload (Mock)</label>
-                <input type="file" className="w-full p-2 border dark:border-gray-700 bg-transparent text-sm" />
-              </div>
-              <div className="flex justify-end space-x-4 pt-4">
-                <button type="button" onClick={() => setIsEditModalOpen(false)} className="px-4 py-2 border dark:border-gray-700">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black font-bold">Save</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      {/* Product Form Modal (Shared for Edit and Add) */}
+      {(isEditModalOpen || isAddModalOpen) && currentProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-900 p-8 rounded shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <h2 className="text-xl font-bold mb-4">{isEditModalOpen ? 'Edit Product' : 'Add New Product'}</h2>
+            <form onSubmit={isEditModalOpen ? handleEditSubmit : handleAddSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-      {/* Add Modal */}
-      {isAddModalOpen && currentProduct && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-900 p-8 rounded shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4">Add New Product</h2>
-            <form onSubmit={handleAddSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-bold mb-1">Name</label>
+              <div className="md:col-span-2">
+                <label className="block text-xs font-bold mb-1 uppercase">Name</label>
                 <input required type="text" value={currentProduct.name} onChange={(e) => setCurrentProduct({...currentProduct, name: e.target.value})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
               </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-xs font-bold mb-1 uppercase">Description</label>
+                <textarea required value={currentProduct.description} onChange={(e) => setCurrentProduct({...currentProduct, description: e.target.value})} className="w-full p-2 border dark:border-gray-700 bg-transparent" rows={3}></textarea>
+              </div>
+
               <div>
-                <label className="block text-sm font-bold mb-1">Price</label>
+                <label className="block text-xs font-bold mb-1 uppercase">Price</label>
                 <input required type="number" value={currentProduct.price} onChange={(e) => setCurrentProduct({...currentProduct, price: parseFloat(e.target.value)})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
               </div>
+
               <div>
-                <label className="block text-sm font-bold mb-1">Image Upload (Mock)</label>
+                <label className="block text-xs font-bold mb-1 uppercase">Sale Price</label>
+                <input type="number" value={currentProduct.salePrice || ''} onChange={(e) => setCurrentProduct({...currentProduct, salePrice: e.target.value ? parseFloat(e.target.value) : null})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold mb-1 uppercase">Category</label>
+                <select value={currentProduct.category} onChange={(e) => setCurrentProduct({...currentProduct, category: e.target.value})} className="w-full p-2 border dark:border-gray-700 bg-transparent">
+                  <option value="Oversized Tees">Oversized Tees</option>
+                  <option value="Regular Tees">Regular Tees</option>
+                  <option value="Hoodies">Hoodies</option>
+                  <option value="Bottoms">Bottoms</option>
+                  <option value="Accessories">Accessories</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold mb-1 uppercase">Subcategory</label>
+                <input type="text" value={currentProduct.subcategory || ''} onChange={(e) => setCurrentProduct({...currentProduct, subcategory: e.target.value})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold mb-1 uppercase">Collection</label>
+                <input type="text" value={currentProduct.collection} onChange={(e) => setCurrentProduct({...currentProduct, collection: e.target.value})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold mb-1 uppercase">Inventory</label>
+                <input type="number" value={currentProduct.inventory || 0} onChange={(e) => setCurrentProduct({...currentProduct, inventory: parseInt(e.target.value)})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold mb-1 uppercase">Color</label>
+                <input type="text" value={currentProduct.color || ''} onChange={(e) => setCurrentProduct({...currentProduct, color: e.target.value})} className="w-full p-2 border dark:border-gray-700 bg-transparent" />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold mb-1 uppercase">Status</label>
+                <select value={currentProduct.status || 'Active'} onChange={(e) => setCurrentProduct({...currentProduct, status: e.target.value})} className="w-full p-2 border dark:border-gray-700 bg-transparent">
+                  <option value="Active">Active</option>
+                  <option value="Draft">Draft</option>
+                  <option value="Archived">Archived</option>
+                </select>
+              </div>
+
+              <div className="md:col-span-2 flex items-center space-x-6">
+                <label className="flex items-center space-x-2">
+                  <input type="checkbox" checked={currentProduct.isNew} onChange={(e) => setCurrentProduct({...currentProduct, isNew: e.target.checked})} className="form-checkbox" />
+                  <span className="text-sm font-bold uppercase">New Arrival</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input type="checkbox" checked={currentProduct.isBestSeller} onChange={(e) => setCurrentProduct({...currentProduct, isBestSeller: e.target.checked})} className="form-checkbox" />
+                  <span className="text-sm font-bold uppercase">Best Seller</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input type="checkbox" checked={currentProduct.discount > 0} onChange={(e) => setCurrentProduct({...currentProduct, discount: e.target.checked ? 10 : 0})} className="form-checkbox" />
+                  <span className="text-sm font-bold uppercase">Featured/Sale</span>
+                </label>
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-xs font-bold mb-1 uppercase">Image Upload (Mock)</label>
                 <input type="file" className="w-full p-2 border dark:border-gray-700 bg-transparent text-sm" />
               </div>
-              <div className="flex justify-end space-x-4 pt-4">
-                <button type="button" onClick={() => setIsAddModalOpen(false)} className="px-4 py-2 border dark:border-gray-700">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black font-bold">Add Product</button>
+
+              <div className="md:col-span-2 flex justify-end space-x-4 pt-4 border-t dark:border-gray-700 mt-4">
+                <button type="button" onClick={() => { setIsEditModalOpen(false); setIsAddModalOpen(false); }} className="px-4 py-2 border dark:border-gray-700 uppercase font-bold text-xs">Cancel</button>
+                <button type="submit" className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black font-bold uppercase text-xs">Save Product</button>
               </div>
             </form>
           </div>
